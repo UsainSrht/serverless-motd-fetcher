@@ -106,7 +106,7 @@ Cloudflare will prompt you to authorize GitHub, create the worker, and prompt fo
 
 ---
 
-## 💻 Step 3: Manual Deployment (CLI via Wrangler)
+## 💻 Step 3: Deployment (CLI via Wrangler)
 
 ### 1. Clone & Install Dependencies
 
@@ -122,35 +122,33 @@ npm install
 npx wrangler login
 ```
 
-### 3. Create Cloudflare D1 Database
+### 3. Automated One-Command Setup (Recommended)
 
-Run the following command to provision your free serverless SQLite database:
-
-```bash
-npx wrangler d1 create mc_motd_db
-```
-
-This output will provide a database ID snippet, for example:
-```toml
-[[d1_databases]]
-binding = "DB"
-database_name = "mc_motd_db"
-database_id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-```
-
-Open [`wrangler.toml`](file:///wrangler.toml) (and [`packages/worker/wrangler.toml`](file:///packages/worker/wrangler.toml)) and replace `database_id = "your-d1-database-id-here"` with your actual ID.
-
-### 4. Execute the Database Schema Migration
-
-Apply the SQL schema to your remote Cloudflare D1 database:
+Run the automated setup script to provision the D1 database and apply the database schema in one shot:
 
 ```bash
-npx wrangler d1 execute mc_motd_db --remote --file=./packages/worker/src/db/schema.sql
+npm run setup
 ```
 
-*(For local testing, you can also run `npm run db:init --workspace=@mc-motd/worker`)*
+> [!TIP]
+> **Zero Code Editing Required**: Thanks to Wrangler v4, Cloudflare automatically resolves your D1 database by its name (`mc_motd_db`). You **do not** need to edit `wrangler.toml` or copy/paste any database UUIDs!
 
-### 5. Configure Cloudflare Secrets
+<details>
+<summary><b>Or run the steps manually:</b></summary>
+
+1. **Create the D1 database:**
+   ```bash
+   npx wrangler d1 create mc_motd_db
+   ```
+   *(Note: Cloudflare outputs a suggested TOML snippet with a `database_id`, but you don't need to paste it—Wrangler automatically resolves it by name).*
+
+2. **Execute the database schema migration:**
+   ```bash
+   npx wrangler d1 execute mc_motd_db --remote --file=./packages/worker/src/db/schema.sql
+   ```
+</details>
+
+### 4. Configure Cloudflare Secrets
 
 Set your Discord Bot token and a secret API key to secure the web UI:
 
@@ -162,7 +160,7 @@ npx wrangler secret put DISCORD_TOKEN --name serverless-motd-fetcher-worker
 npx wrangler secret put API_SECRET --name serverless-motd-fetcher-worker
 ```
 
-### 6. Deploy the Worker Backend
+### 5. Deploy the Worker Backend
 
 ```bash
 npm run deploy
@@ -171,7 +169,7 @@ npm run deploy
 
 Your worker is now live with its cron trigger running every 5 minutes! Note the deployed worker URL (e.g. `https://serverless-motd-fetcher-worker.usainsrht.workers.dev`).
 
-### 7. Deploy the Web Dashboard (Cloudflare Pages)
+### 6. Deploy the Web Dashboard (Cloudflare Pages)
 
 You can deploy the web dashboard using Cloudflare Pages:
 
