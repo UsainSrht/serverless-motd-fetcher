@@ -138,7 +138,7 @@ database_name = "mc_motd_db"
 database_id = "xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
-Open [`packages/worker/wrangler.toml`](file:///packages/worker/wrangler.toml) and replace `database_id = "your-d1-database-id-here"` with your actual ID.
+Open [`wrangler.toml`](file:///wrangler.toml) (and [`packages/worker/wrangler.toml`](file:///packages/worker/wrangler.toml)) and replace `database_id = "your-d1-database-id-here"` with your actual ID.
 
 ### 4. Execute the Database Schema Migration
 
@@ -165,7 +165,8 @@ npx wrangler secret put API_SECRET --name serverless-motd-fetcher-worker
 ### 6. Deploy the Worker Backend
 
 ```bash
-npm run deploy:worker
+npm run deploy
+# Or: npm run deploy:worker
 ```
 
 Your worker is now live with its cron trigger running every 5 minutes! Note the deployed worker URL (e.g. `https://serverless-motd-fetcher-worker.usainsrht.workers.dev`).

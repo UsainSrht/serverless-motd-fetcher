@@ -12,6 +12,7 @@
     "build": "npm run build --workspaces",
     "build:worker": "npm run build --workspace=@mc-motd/worker",
     "build:web": "npm run build --workspace=@mc-motd/web",
+    "deploy": "wrangler deploy",
     "deploy:worker": "npm run deploy --workspace=@mc-motd/worker",
     "deploy:web": "npm run deploy --workspace=@mc-motd/web",
     "test": "node scripts/verify.mjs"
