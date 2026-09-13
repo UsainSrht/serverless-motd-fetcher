@@ -1,0 +1,40 @@
+{
+  "name": "serverless-motd-fetcher",
+  "version": "1.0.0",
+  "description": "Serverless Discord bot and web dashboard for tracking Minecraft server MOTDs on Cloudflare Free Tier",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:worker": "npm run dev --workspace=@mc-motd/worker",
+    "dev:web": "npm run dev --workspace=@mc-motd/web",
+    "build": "npm run build --workspaces",
+    "build:worker": "npm run build --workspace=@mc-motd/worker",
+    "build:web": "npm run build --workspace=@mc-motd/web",
+    "deploy:worker": "npm run deploy --workspace=@mc-motd/worker",
+    "deploy:web": "npm run deploy --workspace=@mc-motd/web",
+    "test": "node scripts/verify.mjs"
+  },
+  "keywords": [
+    "minecraft",
+    "discord-bot",
+    "motd",
+    "cloudflare-workers",
+    "cloudflare-d1",
+    "cloudflare-pages",
+    "hono",
+    "react",
+    "serverless"
+  ],
+  "author": "UsainSrht",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UsainSrht/serverless-motd-fetcher.git"
+  },
+  "bugs": {
+    "url": "https://github.com/UsainSrht/serverless-motd-fetcher/issues"
+  },
+  "homepage": "https://github.com/UsainSrht/serverless-motd-fetcher#readme"
+}

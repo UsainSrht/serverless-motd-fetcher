@@ -1,0 +1,24 @@
+name = "serverless-motd-fetcher-worker"
+main = "src/index.ts"
+compatibility_date = "2024-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Scheduled Cron Trigger - runs every 5 minutes on Cloudflare Free Tier
+[triggers]
+crons = ["*/5 * * * *"]
+
+# Cloudflare D1 Database binding
+# Run: wrangler d1 create mc_motd_db to generate your unique database_id
+[[d1_databases]]
+binding = "DB"
+database_name = "mc_motd_db"
+database_id = "your-d1-database-id-here"
+
+[vars]
+ENVIRONMENT = "production"
+DEFAULT_CRON_INTERVAL = "5m"
+
+# Secrets required:
+# Run:
+# wrangler secret put DISCORD_TOKEN
+# wrangler secret put API_SECRET
